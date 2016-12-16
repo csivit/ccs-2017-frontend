@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Base from './components/Base'
 import Welcome from './components/Welcome/App';
+import Startup from './components/Welcome/Startup';
 import Quiz from './components/Quiz/QuizApp';
 import './index.css';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router,IndexRoute, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -39,7 +40,9 @@ ReactDOM.render(
   <MuiThemeProvider>
     <Router history={history}>
       <Route component={Base}>
-        <Route path="/" component={Welcome}/>
+        <Route path="/" component={Welcome}>
+          <IndexRoute component={Startup}/>
+        </Route>
         <Route path="/quiz" component={Quiz}/>
       </Route>
     </Router>
