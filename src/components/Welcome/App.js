@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import './App.css';
-
+import FlexiblePaper from './FlexiblePaper';
 
 class App extends Component {
 
-
-
-
   render() {
-    const {children} = this.props;
+    const {children, flexPaper} = this.props;
     return (
       <div className="App" >
+      <FlexiblePaper
+            paperHeight={flexPaper.height}
+            paperWidth={flexPaper.width}
+            paperTop={flexPaper.top}>
          {children}
-      </div>
+      </FlexiblePaper>
+      </div>  
     );
   }
 }
 
+const mapStatetoProps = ({flexPaper}) => ({
+  flexPaper
+})
 
-export default App;
+export default connect(mapStatetoProps)(App);

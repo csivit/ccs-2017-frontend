@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import Base from './components/Base'
 import Welcome from './components/Welcome/App';
 import Startup from './components/Welcome/Startup';
+import Signup from './components/Welcome/Signup';
+import Login from './components/Welcome/Login';
 import Quiz from './components/Quiz/QuizApp';
 import './index.css';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -12,7 +14,7 @@ import { Router,IndexRoute, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {userEmail, firstTime} from './reducers/index.js'
+import {userEmail, firstTime, flexPaper} from './reducers/index.js'
 
 
 injectTapEventPlugin();
@@ -22,7 +24,8 @@ const store = createStore(
   combineReducers({
     routing: routerReducer,
     userEmail,
-    firstTime
+    firstTime,
+    flexPaper
   }), applyMiddleware(thunkMiddleware)
 );
 
@@ -42,6 +45,8 @@ ReactDOM.render(
       <Route component={Base}>
         <Route path="/" component={Welcome}>
           <IndexRoute component={Startup}/>
+          <Route path="/signup" component={Signup}/>
+          <Route path="/login" component={Login}/>
         </Route>
         <Route path="/quiz" component={Quiz}/>
       </Route>

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import FlexiblePaper from './FlexiblePaper';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import typeface from '../../typeface-black.svg';
 import {blue500} from 'material-ui/styles/colors';
 import {connect} from 'react-redux';
-import {checkEmailRequest} from '../../actions/index.js';
+import { withRouter } from 'react-router';
+import {checkEmailRequest, changePaperHeight, changePaperWidth} from '../../actions/index.js';
 
 const primaryColorBorder = {
   borderColor: blue500
@@ -13,7 +13,7 @@ const primaryColorBorder = {
 
 class StartupComponent extends Component {
 
-      constructor(props, context) {
+    constructor(props, context) {
     super(props, context);
     
     this.state = {
@@ -22,7 +22,24 @@ class StartupComponent extends Component {
 
     this.updateState = this.updateState.bind(this);
     this.onSave = this.onSave.bind(this);
+
+    this.props.changePaperHeight("70%");
+    this.props.changePaperWidth("60%");
+
   }
+
+  componentWillReceiveProps(nextProps){
+      if(this.props.userEmail !== nextProps.userEmail){
+  
+      if(nextProps.firstTime === true){
+        this.props.router.push('/signup');
+      }
+      else{
+        this.props.router.push('/login');
+      }
+      }
+  }
+
   
   onSave(ev){
     let email = this.state.email;
@@ -36,10 +53,6 @@ class StartupComponent extends Component {
     render() {
         return (
             <div>
-                <div>
-            <FlexiblePaper
-            paperHeight={"75%"}
-            paperWidth={"60%"}>
             <img className="typeface" src={typeface} alt="typeface"></img>
             Presents
             <h1>Core Committee Selection 2017</h1>
@@ -50,16 +63,21 @@ class StartupComponent extends Component {
             onChange={this.updateState}
           />
           <RaisedButton className="SignUpbutton" label="Let's get started" primary={true} onClick={this.onSave}/>
-            </FlexiblePaper>
-        </div>
-            </div>
+          </div>
         );
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  checkEmail: (email) => dispatch(checkEmailRequest(email))
+  checkEmail: (email) => dispatch(checkEmailRequest(email)),
+  changePaperHeight: (height) => dispatch(changePaperHeight(height)),
+  changePaperWidth: (width) => dispatch(changePaperWidth(width))
+})
+
+const mapStateToProps = ({firstTime, userEmail}) =>({
+  firstTime,
+  userEmail
 })
 
 
-export default connect(null, mapDispatchToProps)(StartupComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(StartupComponent));

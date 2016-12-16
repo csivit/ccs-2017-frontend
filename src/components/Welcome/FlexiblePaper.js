@@ -6,7 +6,7 @@ const FlexiblePaperComponent = (props) => {
     const styles = {
         maxWidth : props.paperWidth,
         height: props.paperHeight,
-        top: "15vh",
+        top: props.paperTop || "15vh",
         position: "relative",
         margin: "auto"
     } 

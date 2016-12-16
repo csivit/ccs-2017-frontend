@@ -20,3 +20,17 @@ export const checkEmailRequest = (email) => {
     }
 }
 
+export const changePaperHeight = height => ({
+    type: 'PAPER_CHANGE_HEIGHT',
+    height
+})
+
+export const changePaperWidth = width => ({
+    type: 'PAPER_CHANGE_WIDTH',
+    width
+})
+
+export const changePaperTop = top => ({
+    type: 'PAPER_CHANGE_TOP',
+    top
+})
