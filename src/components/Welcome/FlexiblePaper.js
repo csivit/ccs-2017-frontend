@@ -8,7 +8,8 @@ const FlexiblePaperComponent = (props) => {
         height: props.paperHeight,
         top: props.paperTop || "15vh",
         position: "relative",
-        margin: "auto"
+        margin: "auto",
+        transitionDuration: '2s'
     } 
 
     const children = props.children;

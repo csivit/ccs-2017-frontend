@@ -9,12 +9,15 @@ import Quiz from './components/Quiz/QuizApp';
 import './index.css';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { reducer as formReducer } from 'redux-form'
 import thunkMiddleware from 'redux-thunk';
 import { Router,IndexRoute, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {userEmail, firstTime, flexPaper} from './reducers/index.js'
+import {userEmail, firstTime, flexPaper, auth} from './reducers/index.js';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 
 
 injectTapEventPlugin();
@@ -25,18 +28,20 @@ const store = createStore(
     routing: routerReducer,
     userEmail,
     firstTime,
-    flexPaper
-  }), applyMiddleware(thunkMiddleware)
+    flexPaper,
+    auth,
+    form: formReducer
+  }),composeWithDevTools(applyMiddleware(thunkMiddleware)) 
 );
 
 const history = syncHistoryWithStore(browserHistory, store)
 
-function run(){
-  var state = store.getState();
-  console.log(state);
-}
+// function run(){
+//   var state = store.getState();
+//   console.log(state);
+// }
 
-store.subscribe(run);
+// store.subscribe(run);
 
 ReactDOM.render(
   <Provider store={store}>

@@ -9,12 +9,22 @@
   height: 100%;
 }
 
+.LoginHeading{
+  position: absolute;
+  top: 2vh;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 .typeface{
   margin-top: 5%;
   margin-left: 20%;
   margin-right: 20%;
   margin-bottom: 5%;
+}
+
+.LoginContainer{
+  padding: 5%;
 }
 
 @media only screen and (max-width: 1024px)  {
@@ -26,6 +36,13 @@
 .SignUpButton {
     position: absolute;
     bottom: 10%;
+    transform: translateX(-50%);
+    left: 50%;
+}
+
+.LoginButton {
+    position: absolute;
+    bottom: 5%;
     transform: translateX(-50%);
     left: 50%;
 }
