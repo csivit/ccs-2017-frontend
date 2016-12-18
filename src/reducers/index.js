@@ -43,8 +43,13 @@ export const firstTime = (state, action) =>{
     }
 }
 
-export const userDetails = (state, action) => {
-
+export const adminEditingQuestion = (state = false, action) => {
+    switch(action.type){
+        case 'ADMIN_EDITING_QUESTION':
+            return action.isEdting
+        default:
+            return state
+    }
 }
 
 export const userEmail = (state, action) => {

@@ -6,6 +6,8 @@ import Startup from './components/Welcome/Startup';
 import Signup from './components/Welcome/Signup';
 import Login from './components/Welcome/Login';
 import Quiz from './components/Quiz/QuizApp';
+import Dashboard from './components/Dashboard/Dashboard';
+import Questions from './components/Dashboard/AdminQuestions';
 import './index.css';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -53,7 +55,10 @@ ReactDOM.render(
           <Route path="/signup" component={Signup}/>
           <Route path="/login" component={Login}/>
         </Route>
-        <Route path="/quiz" component={Quiz}/>
+        <Route path="/app" component={Dashboard}>
+            <Route path="/app/questions" component={Questions}/>
+            <Route path="/app/quiz" component={Quiz}/>
+        </Route>
       </Route>
     </Router>
   </MuiThemeProvider>

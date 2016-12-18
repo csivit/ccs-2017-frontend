@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import QuizMain from './QuizMain';
 import Timer from './Timer';
-import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import LinearProgress from 'material-ui/LinearProgress';
 
@@ -32,22 +31,15 @@ const ProgressStyle = {
     'bottom': '0'
 }
 
-const AppBarStyle = {
-    'height': '10%'
-}
 
 class QuizComponent extends Component {
     render() {
         return (
             <div>
-                <AppBar
-                style={AppBarStyle}
-                title="Tech Question Paper"
-                iconElementRight={<Timer time={"06 : 00"}/>}
-                />
                 <div style={styles.div}>
                 <Paper zDepth={1} style={styles.paperLeft}>
                     <h4>Questions</h4>
+                    <Timer time={"06 : 00"}/>
                 </Paper>
                 <div style={styles.paperRight}>
                     <QuizMain />
