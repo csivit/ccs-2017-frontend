@@ -1,27 +1,47 @@
-.typefaceMenu{
+.typefaceMenu {
     padding: 40px;
     width: 220px;
 }
 
-.AddQuestionContainer{
-    padding : 20px;
+.AddQuestionContainer {
+    padding: 20px;
 }
 
-h2{
+h2 {
     font-family: 'Roboto';
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     font-weight: 300;
     color: rgba(0, 0, 0, 0.541176);
+    text-align: center;
 }
 
-.AddQuestionPaper{
+.uploadPreview {
+    width: 75%;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.AddQuestionPaper {
     padding: 20px;
     height: 80%;
 }
 
-.photoUpload{
-    width: 80%;
+.photoUpload {
+    width: 60%;
     height: 30%;
     border: 1px dashed #9c9c9c;
     margin: 20px auto;
+}
+
+.dropzoneContent {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.addQuestionButton{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }

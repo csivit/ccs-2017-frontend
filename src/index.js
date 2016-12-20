@@ -8,6 +8,7 @@ import Login from './components/Welcome/Login';
 import Quiz from './components/Quiz/QuizApp';
 import Dashboard from './components/Dashboard/Dashboard';
 import Questions from './components/Dashboard/AdminQuestions';
+
 import './index.css';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -17,7 +18,7 @@ import { Router,IndexRoute, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {userEmail, firstTime, flexPaper, auth} from './reducers/index.js';
+import {userEmail, firstTime, flexPaper, auth, addOrEditQuestionAdmin, questionsAdmin} from './reducers/index.js';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 
@@ -32,7 +33,9 @@ const store = createStore(
     firstTime,
     flexPaper,
     auth,
-    form: formReducer
+    form: formReducer,
+    addOrEditQuestionAdmin,
+    questionsAdmin
   }),composeWithDevTools(applyMiddleware(thunkMiddleware)) 
 );
 

@@ -43,15 +43,26 @@ export const firstTime = (state, action) =>{
     }
 }
 
-export const adminEditingQuestion = (state = false, action) => {
+
+export const questionsAdmin = (state=[], action) =>{
     switch(action.type){
-        case 'ADMIN_EDITING_QUESTION':
-            return action.isEdting
+        case 'ADMIN_QUESTION_GET':
+            return action.questions
+        case 'ADMIN_QUESTION_ADD':
+            return state.concat([action.question])
         default:
             return state
     }
 }
 
+export const addOrEditQuestionAdmin = (state='none', action) =>{
+    switch(action.type){
+        case 'ADMIN_ADD_OR_EDIT':
+            return action.state
+        default:
+            return state
+    }
+}
 export const userEmail = (state, action) => {
     switch(action.type){
         case 'CHECK_EMAIL_RESPONSE':
