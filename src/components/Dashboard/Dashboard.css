@@ -24,6 +24,7 @@ h2 {
 .AddQuestionPaper {
     padding: 20px;
     height: 80%;
+    overflow-y: auto;
 }
 
 .photoUpload {

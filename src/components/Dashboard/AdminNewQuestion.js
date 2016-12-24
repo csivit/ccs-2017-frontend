@@ -30,7 +30,7 @@ class AdminNewQuestion extends Component {
     submitForm(data) {
         var body = new FormData();
 
-        this.props.reset();
+        //this.props.reset();
 
         Object
             .keys(data)
@@ -38,7 +38,7 @@ class AdminNewQuestion extends Component {
                 body.append(key, data[key]);
             });
         if(this.state.files.length > 0){
-            body.append('photo', this.state.files[0])
+            body.append('questionImage', this.state.files[0])
         }
         this
             .props
@@ -73,6 +73,11 @@ class AdminNewQuestion extends Component {
                             name="options"
                             component={TextField}
                             hintText="option1,option2,option3"
+                            fullWidth={true}/>
+                        <Field
+                            name="correctAnswer"
+                            component={TextField}
+                            hintText="Correct Answer"
                             fullWidth={true}/>
                         <Field
                             name="type"

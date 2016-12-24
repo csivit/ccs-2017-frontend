@@ -8,6 +8,7 @@ import Login from './components/Welcome/Login';
 import Quiz from './components/Quiz/QuizApp';
 import Dashboard from './components/Dashboard/Dashboard';
 import Questions from './components/Dashboard/AdminQuestions';
+import QuestionsList from './components/Dashboard/AdminQuestionsList';
 
 import './index.css';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -59,7 +60,9 @@ ReactDOM.render(
           <Route path="/login" component={Login}/>
         </Route>
         <Route path="/app" component={Dashboard}>
-            <Route path="/app/questions" component={Questions}/>
+            <Route path="/app/questions" component={Questions}>
+              <Route path="/app/questions/:type" component={QuestionsList}/>
+            </Route>
             <Route path="/app/quiz" component={Quiz}/>
         </Route>
       </Route>

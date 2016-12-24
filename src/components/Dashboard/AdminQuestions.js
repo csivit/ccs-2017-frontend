@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
+import {Link} from 'react-router';
 import {List, ListItem} from 'material-ui/List';
 import Code from 'material-ui/svg-icons/action/code';
 import InvertColors from 'material-ui/svg-icons/action/invert-colors';
@@ -9,7 +10,7 @@ import AdminEditQuestion from './AdminEditQuestion';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {connect} from 'react-redux';
-import {addOrEditQuestionAdmin} from '../../actions/index';
+import {addOrEditQuestionAdmin, getQuestionsAdmin} from '../../actions/index';
 
 class AdminQuestionComponent extends Component {
 
@@ -19,6 +20,10 @@ class AdminQuestionComponent extends Component {
         this.toggleAdd = this.toggleAdd.bind(this);
     }
 
+    componentDidMount(){
+        this.props.getQuesions();
+    }
+    
     toggleAdd (ev) {
         if(this.props.editOrAdd === 'none'){
             this.props.shiftState('add');            
@@ -77,9 +82,9 @@ class AdminQuestionComponent extends Component {
                     <div style={styles.paperLeftTracks}>
                         <List>
                             <Subheader>Tracks</Subheader>
-                            <ListItem primaryText="Tech Questions" leftIcon={< Code />}/>
-                            <ListItem primaryText="Management Questions" leftIcon={< Code />}/>
-                            <ListItem primaryText="Creative Questions" leftIcon={< InvertColors />}/>
+                            <ListItem primaryText="Tech Questions" containerElement={<Link to="/app/questions/tech"/>} leftIcon={< Code />}/>
+                            <ListItem primaryText="Management Questions" containerElement={<Link to="/app/questions/management"/>} leftIcon={< Code />}/>
+                            <ListItem primaryText="Creative Questions" containerElement={<Link to="/app/questions/creative"/>} leftIcon={< InvertColors />}/>
                         </List>
                     </div>
                     <div style={styles.paperLeftQuestion}>
@@ -112,6 +117,7 @@ const mapStateToProps = (state) =>({
 
 
 const mapDispatchToProps = (dispatch) => ({
-    shiftState: (state) => dispatch(addOrEditQuestionAdmin(state))
+    shiftState: (state) => dispatch(addOrEditQuestionAdmin(state)),
+    getQuesions: () => dispatch(getQuestionsAdmin())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(AdminQuestionComponent);
