@@ -4,7 +4,8 @@ import {
 
 export const auth = (state = {
     isFetching: false,
-    isAuthenticated: sessionStorage.getItem('id_token') ? true : false
+    isAuthenticated: sessionStorage.getItem('id_token') ? true : false,
+    id_token: sessionStorage.getItem('id_token')
   }, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -17,6 +18,7 @@ export const auth = (state = {
         isFetching: false,
         isAuthenticated: true,
         errorMessage: '',
+        id_token: action.id_token
       })
     case LOGIN_FAILURE:
       return Object.assign({}, state, {

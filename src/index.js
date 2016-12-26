@@ -7,6 +7,7 @@ import Signup from './components/Welcome/Signup';
 import Login from './components/Welcome/Login';
 import Quiz from './components/Quiz/QuizApp';
 import Dashboard from './components/Dashboard/Dashboard';
+import TrackChoosing from './components/Dashboard/TrackChoosing';
 import Questions from './components/Dashboard/AdminQuestions';
 import QuestionsList from './components/Dashboard/AdminQuestionsList';
 
@@ -60,6 +61,7 @@ ReactDOM.render(
           <Route path="/login" component={Login}/>
         </Route>
         <Route path="/app" component={Dashboard}>
+            <IndexRoute component={TrackChoosing}/>
             <Route path="/app/questions" component={Questions}>
               <Route path="/app/questions/:type" component={QuestionsList}/>
             </Route>

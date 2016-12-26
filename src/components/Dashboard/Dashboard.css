@@ -46,3 +46,9 @@ h2 {
     left: 50%;
     transform: translateX(-50%);
 }
+
+.dashboardContainer{
+    background: #f9f9f9;
+    height: 69%; /*Not my fault */
+    padding: 5%;
+}
