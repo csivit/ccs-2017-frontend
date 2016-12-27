@@ -57,6 +57,33 @@ export const questionsAdmin = (state=[], action) =>{
     }
 }
 
+export const currentQuestionQuiz = (state = 0, action) =>{
+    switch(action.type){
+        case 'QUIZ_CHANGE_QUESTION':
+            return action.currentQuestion
+        default:
+            return state
+    }
+}
+
+export const questionsQuiz = (state=[], action) =>{
+    switch(action.type){
+        case 'QUIZ_QUESTION_GET':
+            return action.questions
+        default:
+            return state
+    }
+}
+
+export const timeQuiz = (state = 0, action) => {
+    switch(action.type){
+        case 'QUIZ_QUESTION_GET':
+            return action.time_attempted
+        default:
+            return state
+    }
+}
+
 export const addOrEditQuestionAdmin = (state='none', action) =>{
     switch(action.type){
         case 'ADMIN_ADD_OR_EDIT':

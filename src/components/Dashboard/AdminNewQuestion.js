@@ -99,7 +99,7 @@ class AdminNewQuestion extends Component {
                                 {(this.state.files.length > 0)
                                     ? (
                                         <div>
-                                            {this.state.files.map((file, i) => <img className="uploadPreview" key={i} src={file.preview}/>)}
+                                            {this.state.files.map((file, i) => <img alt='dropped_image'className="uploadPreview" key={i} src={file.preview}/>)}
                                         </div>
                                     )
                                     : <div className="dropzoneContent">Try dropping some files here, or click to select files to upload.</div>}

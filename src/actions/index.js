@@ -43,6 +43,11 @@ export const addQuestionSuccess = (data) => {
 export const getQuestionsAdminSuccess = (data) => {
   return {type: 'ADMIN_QUESTION_GET', questions: data.questions}
 }
+
+export const getQuestionsQuizSuccess = (data) => {
+  return {type: 'QUIZ_QUESTION_GET', questions: data.questionSet._questions, time_attempted: data.questionSet.attemptedOn}
+}
+
 export const checkEmailRequest = (email) => {
   return (dispatch) => {
     fetch('/checkEmail', {
@@ -99,6 +104,28 @@ export const getQuestionsAdmin = () => {
     }
 }
 
+export const getQuestionsQuiz = (type) => {
+    return (dispatch) => {
+      fetch('/user/getQuestions/'+ type,{
+        headers: {
+        Accept: 'application/json',
+        Authorization: sessionStorage.getItem('id_token') || ''
+        }
+      })
+      .then(response => response.json().then(questions => ({questions, response})))
+      .then(({questions, response}) => {
+        if (!response.ok) {
+          dispatch(apiError(questions.message))
+          return Promise.reject(questions)
+        } else {
+          console.log(questions);
+          dispatch(getQuestionsQuizSuccess(questions))
+        }
+      })
+      .catch(err => console.log("Error: ", err))
+    }
+}
+
 export const addQuestionRequest = (values) => {
   return (dispatch) => {
     fetch('/admin/questions/addQuestion', {
@@ -111,6 +138,7 @@ export const addQuestionRequest = (values) => {
           dispatch(apiError(question.message))
           return Promise.reject(question)
         } else {
+          
           dispatch(addQuestionSuccess(question))
         }
       })
@@ -126,6 +154,8 @@ export function logoutUser() {
     dispatch(receiveLogout())
   }
 }
+
+export const changeCurrentQuestion = currentQuestion => ({type: 'QUIZ_CHANGE_QUESTION', currentQuestion})
 
 export const changePaperHeight = height => ({type: 'PAPER_CHANGE_HEIGHT', height})
 
