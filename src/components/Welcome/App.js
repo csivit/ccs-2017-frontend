@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import './App.css';
 import Snackbar from 'material-ui/Snackbar';
 import FlexiblePaper from './FlexiblePaper';
+import { withRouter } from 'react-router';
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +25,9 @@ class App extends Component {
             this.setState({
                 open: true
             });
+        }
+        if(nextProps.isAuth){
+          this.props.router.push('/app');
         }
   }
 
@@ -52,7 +56,8 @@ class App extends Component {
 
 const mapStatetoProps = ({flexPaper, auth}) => ({
   flexPaper,
-  message: auth.errorMessage
+  message: auth.errorMessage,
+  isAuth: auth.isAuthenticated
 })
 
 export default connect(mapStatetoProps)(App);
