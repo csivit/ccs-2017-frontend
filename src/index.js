@@ -7,6 +7,7 @@ import Signup from './components/Welcome/Signup';
 import Login from './components/Welcome/Login';
 import Quiz from './components/Quiz/QuizApp';
 import Dashboard from './components/Dashboard/Dashboard';
+import FeedbackForm from './components/Dashboard/FeedbackForm';
 import TrackChoosing from './components/Dashboard/TrackChoosing';
 import Questions from './components/Dashboard/AdminQuestions';
 import QuestionsList from './components/Dashboard/AdminQuestionsList';
@@ -29,7 +30,10 @@ import {
   questionsAdmin,
   questionsQuiz,
   timeQuiz,
-  currentQuestionQuiz
+  currentQuestionQuiz,
+  inQuiz,
+  userDetails,
+  appHeader
 } from './reducers/index.js';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
@@ -46,13 +50,25 @@ const store = createStore(combineReducers({
   questionsAdmin,
   questionsQuiz,
   timeQuiz,
-  currentQuestionQuiz
+  currentQuestionQuiz,
+  inQuiz,
+  userDetails,
+  appHeader
 }), composeWithDevTools(applyMiddleware(thunkMiddleware)));
 
 const history = syncHistoryWithStore(browserHistory, store)
 
 // function run(){   var state = store.getState();   console.log(state); }
 // store.subscribe(run);
+
+const userIsLoggedIn = (nextState, replace, callback) => {
+      var state = store.getState();
+      
+      if (state.auth.isAuthenticated=== false) {
+        replace('/');
+      }
+      callback();
+}
 
 ReactDOM.render(
   <Provider store={store}>
@@ -64,8 +80,9 @@ ReactDOM.render(
           <Route path="/signup" component={Signup}/>
           <Route path="/login" component={Login}/>
         </Route>
-        <Route path="/app" component={Dashboard}>
+        <Route path="/app"  onEnter={userIsLoggedIn} component={Dashboard}>
           <IndexRoute component={TrackChoosing}/>
+          <Route path='/app/feedback' component={FeedbackForm}/>
           <Route path="/app/questions" component={Questions}>
             <Route path="/app/questions/:type" component={QuestionsList}/>
           </Route>

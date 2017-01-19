@@ -52,3 +52,11 @@ h2 {
     height: 69%; /*Not my fault */
     padding: 5%;
 }
+
+.trackImage{
+    height: 50%;
+}
+
+.trackTitle{
+    font-weight: 600;
+}

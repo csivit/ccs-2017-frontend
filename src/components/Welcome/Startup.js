@@ -17,17 +17,29 @@ class StartupComponent extends Component {
     super(props, context);
     
     this.state = {
-         email: ''
+         email: '',
+         hidden: "default"
     }
 
     this.updateState = this.updateState.bind(this);
     this.onSave = this.onSave.bind(this);
-
-    this.props.changePaperHeight("70%");
-    this.props.changePaperWidth("60%");
+    setTimeout(() => {
+      this.props.changePaperHeight("70%");
+      this.props.changePaperWidth("60%");
+    }, 300);
 
   }
 
+  show(){
+     this.setState({...this.state, hidden : "default hidden"});
+  }
+  componentWillMount() {
+    var that = this;
+        setTimeout(function() {
+            that.show();
+        }, 500);
+  }
+  
   componentWillReceiveProps(nextProps){
       if(this.props.userEmail !== nextProps.userEmail){
   
@@ -48,11 +60,13 @@ class StartupComponent extends Component {
   }
 
   updateState(e) {
-      this.setState({email: e.target.value});
+      this.setState(...this.state,{email: e.target.value});
    }
+
+   
     render() {
         return (
-            <div>
+            <div className={this.state.hidden}>
             <img className="typeface" src={typeface} alt="typeface"></img>
             Presents
             <h1>Core Committee Selection 2017</h1>

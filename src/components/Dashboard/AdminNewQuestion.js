@@ -9,8 +9,6 @@ import {connect} from 'react-redux';
 import {addQuestionRequest} from '../../actions/index';
 
 import RaisedButton from 'material-ui/RaisedButton';
-const FILE_FIELD_NAME = 'questionPhoto';
-
 
 class AdminNewQuestion extends Component {
     constructor(props) {
@@ -22,6 +20,8 @@ class AdminNewQuestion extends Component {
 
         this.filesDropped = this.filesDropped.bind(this);
 
+        this.removePic = this.removePic.bind(this);
+
         this.state = {
             files: []
         }
@@ -30,7 +30,7 @@ class AdminNewQuestion extends Component {
     submitForm(data) {
         var body = new FormData();
 
-        //this.props.reset();
+        this.props.reset();
 
         Object
             .keys(data)
@@ -52,6 +52,12 @@ class AdminNewQuestion extends Component {
     filesDropped(files){
         this.setState({
             files
+        })
+    }
+
+    removePic(){
+        this.setState({
+            files: []
         })
     }
 
@@ -99,7 +105,7 @@ class AdminNewQuestion extends Component {
                                 {(this.state.files.length > 0)
                                     ? (
                                         <div>
-                                            {this.state.files.map((file, i) => <img alt='dropped_image'className="uploadPreview" key={i} src={file.preview}/>)}
+                                            {this.state.files.map((file, i) => <img role="presentation" className="uploadPreview" key={i} src={file.preview}/>)}
                                         </div>
                                     )
                                     : <div className="dropzoneContent">Try dropping some files here, or click to select files to upload.</div>}
@@ -107,7 +113,11 @@ class AdminNewQuestion extends Component {
                             </Dropzone>
                         </div>
                         <RaisedButton
-                            className="addQuestionButton"
+                            style={{margin: '0 20%'}}
+                            label="Remove Photo"
+                            onTouchTap={this.removePic}
+                            />
+                        <RaisedButton
                             label="Add"
                             onTouchTap={handleSubmit(this.submitForm)}
                             primary={true}/>

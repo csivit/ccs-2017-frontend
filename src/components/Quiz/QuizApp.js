@@ -5,10 +5,15 @@ import QuestionTable from './QuestionTable';
 import Paper from 'material-ui/Paper';
 import LinearProgress from 'material-ui/LinearProgress';
 import {connect} from 'react-redux';
-import {getQuestionsQuiz, changeCurrentQuestion} from '../../actions/index';
+import {withRouter} from 'react-router';
+import {getQuestionsQuiz, changeCurrentQuestion,submitAnswersRequest} from '../../actions/index';
 import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
+import {submit, destroy} from 'redux-form';
 
 import './Quiz.css';
+
 
 const styles = {
     div: {
@@ -48,62 +53,152 @@ class QuizComponent extends Component {
 
     constructor(props, context) {
         super(props, context);
-        
-        this.onNextClick = this.onNextClick.bind(this);
-        this.onPrevClick = this.onPrevClick.bind(this);
+
+        this.onNextClick = this
+            .onNextClick
+            .bind(this);
+        this.onPrevClick = this
+            .onPrevClick
+            .bind(this);
+        this.onSubmitQuiz = this
+            .onSubmitQuiz
+            .bind(this);
     }
     
+    
+    componentWillMount() {
+        if(this.props.inQuiz === false){
+            this.props.router.push('/app');
+        }
+    }
+    
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.inQuiz === false){
+            this.props.router.push('/app');
+        }
+    }
+        
+
+    requestSubmitQuiz = (values) => {
+
+        console.log(values);
+    }
+    state = {
+        open: false
+    };
+
+    handleOpen = () => {
+        this.setState({open: true});
+    };
+
+    handleClose = () => {
+        this.setState({open: false});
+    };
+
     componentDidMount() {
         this
             .props
             .getQuestions(this.props.type);
     }
 
-    onNextClick(){
-        this.props.changeQuestion(this.props.currentQuestion + 1);
+    onNextClick() {
+        this
+            .props
+            .changeQuestion(this.props.currentQuestion + 1);
     }
 
-    onPrevClick(){
-        this.props.changeQuestion(this.props.currentQuestion - 1);
+    onPrevClick() {
+        this
+            .props
+            .changeQuestion(this.props.currentQuestion - 1);
+    }
+
+    onSubmitQuiz() {
+        this
+            .props
+            .submitQuiz();
+        
+        this.handleClose();
+
     }
     render() {
-        const {currentQuestion, questions} = this.props;
+        const {currentQuestion, questions, answers, type} = this.props;
+
+        const actions = [
+            <FlatButton
+                label="Cancel"
+                primary={true}
+                onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+                label="Submit"
+                primary={true}
+                onTouchTap={this.onSubmitQuiz}
+            />,
+        ];
         return (
             <div>
+                <Dialog
+          title="Submit Quiz"
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
+          Are you you want to submit.
+        </Dialog>
                 <div style={styles.div}>
                     <Paper zDepth={1} style={styles.paperLeft}>
                         <h4>Questions</h4>
                         <QuestionTable questions={questions}/>
                         <h4>Timer</h4>
-                        <Timer time={"06 : 00"}/>
+                        <Timer onTimeUp={this.onSubmitQuiz} time={this.props.timeQuiz}/>
+                        <RaisedButton label="Submit" primary={true} onTouchTap={this.handleOpen}/>
                     </Paper>
                     <div style={styles.paperRight}>
-                        <QuizMain question={questions[currentQuestion]}/>
+                        <QuizMain 
+                        question={questions[currentQuestion]} 
+                        onSubmit={
+                            (values) => {
+                            this.props.submitAnswers(values, type);
+                            this.props.destroyAnswers();
+                            }
+                        }/>
                         <FlatButton
                             style={styles.previousButton}
                             label="Previous"
-                            disabled={currentQuestion == 0}
+                            disabled={currentQuestion === 0}
                             onTouchTap={this.onPrevClick}/>
                         <FlatButton
                             style={styles.nextButton}
                             label="Next"
-                            disabled={currentQuestion == (questions.length - 1)}
+                            disabled={currentQuestion === (questions.length - 1)}
                             primary={true}
                             onTouchTap={this.onNextClick}/>
-
                     </div>
                 </div>
-                <LinearProgress style={ProgressStyle} mode="determinate" value={20}/>
+
+                {answers && <LinearProgress style={ProgressStyle} mode="determinate" value={(answers.values)?(Object.keys(answers.values).length / questions.length * 100):0} />}
             </div>
         );
     }
 }
 
-const mapStateToProps = (state, router) => ({questions: state.questionsQuiz, type: router.params.q_type, currentQuestion: state.currentQuestionQuiz});
+const mapStateToProps = (state, router) => ({
+    questions: state.questionsQuiz,
+    type: router.params.q_type,
+    currentQuestion: state.currentQuestionQuiz,
+    answers: state.form.quizForm,
+    timeQuiz: state.timeQuiz,
+    inQuiz: state.inQuiz
+    });
 
 const mapDispathToProps = dispatch => ({
     getQuestions: (type) => dispatch(getQuestionsQuiz(type)),
-    changeQuestion: (currentQuestion) => dispatch(changeCurrentQuestion(currentQuestion))
+    changeQuestion: (currentQuestion) => dispatch(changeCurrentQuestion(currentQuestion)),
+    submitQuiz: () => dispatch(submit('quizForm')),
+    submitAnswers: (values, type) => dispatch(submitAnswersRequest(values, type)),
+    destroyAnswers: () => dispatch(destroy('quizForm'))
 })
 
-export default connect(mapStateToProps, mapDispathToProps)(QuizComponent);
+export default connect(mapStateToProps, mapDispathToProps)(withRouter(QuizComponent));

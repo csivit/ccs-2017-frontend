@@ -4,12 +4,12 @@ import Paper from 'material-ui/Paper';
 const FlexiblePaperComponent = (props) => {
 
     const styles = {
-        maxWidth : props.paperWidth,
-        height: props.paperHeight,
+        maxWidth : props.paperWidth || 0,
+        height: props.paperHeight || 0,
         top: props.paperTop || "15vh",
         position: "relative",
         margin: "auto",
-        transitionDuration: '2s'
+        transitionDuration: '1s'
     } 
 
     const children = props.children;

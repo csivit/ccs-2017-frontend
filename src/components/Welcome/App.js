@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import './App.css';
 import Snackbar from 'material-ui/Snackbar';
 import FlexiblePaper from './FlexiblePaper';
-import { withRouter } from 'react-router';
 
 class App extends Component {
   constructor(props) {

@@ -52,6 +52,8 @@ export const questionsAdmin = (state=[], action) =>{
             return action.questions
         case 'ADMIN_QUESTION_ADD':
             return state.concat([action.question])
+        case 'ADMIN_QUESTION_EDIT':
+            return state.map((question) => (question._id === action.question._id)?action.question:question)
         default:
             return state
     }
@@ -75,10 +77,33 @@ export const questionsQuiz = (state=[], action) =>{
     }
 }
 
-export const timeQuiz = (state = 0, action) => {
+export const appHeader = (state="CSI Core Committee Selection", action) =>{
     switch(action.type){
+        case 'CHANGE_APP_HEADER':
+            return action.header
+        default:
+            return state
+    }
+}
+
+export const timeQuiz = (state = Date.now(), action) => {
+    switch(action.type){
+        case 'QUIZ_START':
+            return Date.now()
         case 'QUIZ_QUESTION_GET':
-            return action.time_attempted
+            return Date.parse(action.time_attempted)
+        default:
+            return state
+    }
+}
+
+export const inQuiz = (state=false, action) => {
+    switch(action.type){
+        case 'QUIZ_START':
+            return true;
+        case 'QUIZ_STOP':
+        case 'QUIZ_ANSWERS_SUBMITTED':
+            return false;
         default:
             return state
     }
@@ -98,6 +123,15 @@ export const userEmail = (state, action) => {
             return action.data.email
         default:
             return state || ''
+    }
+}
+
+export const userDetails = (state={}, action) => {
+    switch(action.type){
+        case 'QUIZ_USER_GET':
+            return action.user;
+        default:
+            return state
     }
 }
 

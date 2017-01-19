@@ -94,6 +94,7 @@ class AdminQuestionComponent extends Component {
                         </List>
                     </div>
                 </Paper>
+                
                 <div style={styles.paperRight}>
                     
                     {(this.props.editOrAdd === 'edit')

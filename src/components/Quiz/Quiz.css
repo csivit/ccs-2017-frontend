@@ -12,3 +12,12 @@
   max-width: 80%;
   min-height: 75%;
 }
+
+.AnswersContainer{
+  padding: 2%;
+  margin: 20 20%;
+}
+
+.AnswerOption{
+  margin:10px auto;
+}

@@ -3,8 +3,21 @@ import {loginRequest, changePaperHeight, changePaperWidth, changePaperTop} from 
 import {connect} from 'react-redux';
 import typeface from '../../typeface-black.svg';
 import {Field, reduxForm} from 'redux-form';
-import {TextField} from 'redux-form-material-ui'
+import {TextField} from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
+
+const validate = values => {
+  const errors = {}
+  if (!values.password) {
+    errors.password = 'Required'
+  }
+  if (!values.email) {
+    errors.email = 'Required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address'
+  }
+  return errors
+}
 
 class LoginComponent extends Component {
 
@@ -29,7 +42,7 @@ class LoginComponent extends Component {
                 <div>
                     <form>
                         <Field name="email" component={TextField} floatingLabelText="Email"/>
-                        <Field name="password" component={TextField} floatingLabelText="Password"/>
+                        <Field name="password" component={TextField} type="password" floatingLabelText="Password"/>
                         <RaisedButton
                             className="Loginbutton"
                             label="Login"
@@ -55,6 +68,6 @@ const mapStateToProps = state => ({
         email: state.userEmail
     }
 })
-const LoginForm = reduxForm({form: 'LoginForm'})(LoginComponent);
+const LoginForm = reduxForm({form: 'LoginForm', validate})(LoginComponent);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
